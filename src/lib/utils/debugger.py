@@ -276,6 +276,7 @@ class Debugger(object):
     self, img, dets, show_box=False, show_txt=True, 
     center_thresh=0.5, img_id='det'):
     # dets: max_preds x 5
+    save_ct = {}
     self.imgs[img_id] = img.copy()
     if type(dets) == type({}):
       for cat in dets:
@@ -287,7 +288,8 @@ class Debugger(object):
               w, h = dets[cat][i, -2], dets[cat][i, -1]
               x, y = dets[cat][i, 0], dets[cat][i, 1]
               bbox = np.array([x - w / 2, y - h / 2, x + w / 2, y + h / 2],
-                              dtype=np.float32)
+                              dtype=np.float32) # convert to x1 y1 x2 y2
+              
               self.add_coco_bbox(
                 bbox, cat - 1, dets[cat][i, 2], 
                 show_txt=show_txt, img_id=img_id)
