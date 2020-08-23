@@ -136,8 +136,8 @@ class BaseDetector(object):
     merge_time += end_time - post_process_time
     tot_time += end_time - start_time
 
-    if self.opt.debug == 4:
-        debugger.save_all_imgs(self.opt.debug_dir, prefix='{}'.format(0))
+    # if self.opt.debug == 4:
+    #     debugger.save_all_imgs(self.opt.debug_dir, prefix='{}'.format(0))
       
     # if self.opt.debug >= 1:
     #   self.show_results(debugger, image, results)
