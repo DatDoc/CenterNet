@@ -6,21 +6,22 @@ import _init_paths
 
 import os
 import cv2
-
+import json 
 from opts import opts
 from detectors.detector_factory import detector_factory
 
 image_ext = ['jpg', 'jpeg', 'png', 'webp']
 video_ext = ['mp4', 'mov', 'avi', 'mkv']
 time_stats = ['tot', 'load', 'pre', 'net', 'dec', 'post', 'merge']
-dictionary = {
-  2: 'bicycle',
-  3: 'car',
-  4: 'motorcycle',
-  6: 'bus',
-  8: 'truck',
-  -1: 'xebagac'
-}
+class_name = [
+      'xe_ba_gac','xe_ban_tai','xe_buyt','xe_cap_cuu','xe_container','xe_dap','xe_hoi','xe_khach','xe_may','xe_tai']
+class_ids = [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+def to_float(x):
+  return float("{:.2f}".format(x))
+
+dictionary = dict(zip(class_ids,class_name))
 def demo(opt):
   os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
   opt.debug = max(opt.debug, 1)
@@ -59,7 +60,7 @@ def demo(opt):
         time_str = time_str + '{} {:.3f}s |'.format(stat, ret[stat])
       # print(time_str)
       dets = ret['results']
-      txt_path = '/content/cp/{}.xml'.format(image_name.split('.')[0])
+      txt_path = '/content/cp/{}.txt'.format(image_name.split('.')[0])
       try: 
           os.makedirs('/'.join(map(str, txt_path.split('/')[:-1])))
       except: 
@@ -68,8 +69,30 @@ def demo(opt):
       for key in dets.keys():
         if key in dictionary.keys():
           for i in range(len(dets[key])):
-            f.write('{} {} {} {} {}\n'.format(dictionary[key],int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3])))
+            if dets[key][i , 4] > 0.3:
+                f.write('{} {} {} {} {}\n'.format(dictionary[key],int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3])))
       f.close()
+      detections = [] 
+      json_path = '/content/cp/{}.json'.format(image_name.split('.')[0])
+      for cls_ind in ret['results']:
+        category_id = class_ids[cls_ind - 1]
+        for bbox in ret['results'][cls_ind]:
+          bbox[2] -= bbox[0]
+          bbox[3] -= bbox[1]
+          score = bbox[4]
+          bbox_out  = list(map(to_float, bbox[0:4]))
+          detection = {
+              "image_name":image_name,
+              "category_id": int(category_id),
+              "bbox": bbox_out,
+              "score": float("{:.2f}".format(score))
+          }
+          if len(bbox) > 5:
+              extreme_points = list(map(to_float, bbox[5:13]))
+              detection["extreme_points"] = extreme_points
+          detections.append(detection)
+    json.dump(detections,open(json_path, 'w'))
+
 
 
 
