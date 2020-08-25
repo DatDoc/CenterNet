@@ -60,7 +60,7 @@ def demo(opt):
         time_str = time_str + '{} {:.3f}s |'.format(stat, ret[stat])
       # print(time_str)
       dets = ret['results']
-      txt_path = os.path.join(save_dir, '{}.txt'.format(image_name.split('/')[-1]))
+      txt_path = os.path.join(save_dir, '{}.txt'.format(image_name.split('/')[-1].split('.')[0]))
       print(txt_path)
       try: 
           os.makedirs('/'.join(map(str, txt_path.split('/')[:-1])))
