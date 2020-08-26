@@ -53,7 +53,7 @@ def demo(opt):
     else:
       image_names = [opt.demo]
     
-    for (image_name) in image_names:
+    for (image_name) in tqdm(image_names):
       ret = detector.run(image_name)
       time_str = ''
       for stat in time_stats:
@@ -61,7 +61,7 @@ def demo(opt):
       # print(time_str)
       dets = ret['results']
       txt_path = os.path.join(save_dir, '{}.txt'.format(image_name.split('/')[-1].split('.')[0]))
-      print(txt_path)
+      # print(txt_path)
       try: 
           os.makedirs('/'.join(map(str, txt_path.split('/')[:-1])))
       except: 
