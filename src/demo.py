@@ -7,6 +7,7 @@ import _init_paths
 import os
 import cv2
 import json 
+from tqdm import tqdm
 from opts import opts
 from detectors.detector_factory import detector_factory
 
