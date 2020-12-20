@@ -11,7 +11,7 @@ import os
 import torch.utils.data as data
 
 class COCO(data.Dataset):
-  num_classes = 6 #CHANGE THIS TO NUMBER OF CLASSES 
+  num_classes = 7 #CHANGE THIS TO NUMBER OF CLASSES 
   default_resolution = [512, 512]
   mean = np.array([0.40789654, 0.44719302, 0.47026115],
                    dtype=np.float32).reshape(1, 1, 3)
@@ -40,9 +40,9 @@ class COCO(data.Dataset):
           'labels.json').format(split)
     self.max_objs = 128
     ############# CHANGE TO CUSTOM CLASSES AND MATCH CLASSES IDS ####################
-    self.class_name = ['uit', 'hsv', 'cs', 'cnpm', 'ktmt', 'khkttt']
+    self.class_name = ['logo', 'cnpm', 'cs', 'hsv', 'khkttt', 'ktmt', 'uit']
     self._valid_ids = [
-      1, 2, 3, 4, 5, 6]
+      0, 1, 2, 3, 4, 5, 6]
     #################################################################################  
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
     self.voc_color = [(v // 32 * 64 + 64, (v // 8) % 4 * 64, v % 8 * 32) \

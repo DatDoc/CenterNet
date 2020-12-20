@@ -14,10 +14,10 @@ from detectors.detector_factory import detector_factory
 image_ext = ['jpg', 'jpeg', 'png', 'webp']
 video_ext = ['mp4', 'mov', 'avi', 'mkv']
 time_stats = ['tot', 'load', 'pre', 'net', 'dec', 'post', 'merge']
-class_name = ['uit', 'hsv', 'cs', 'cnpm', 'ktmt', 'khkttt']
+class_name = ['logo', 'cnpm', 'cs', 'hsv', 'khkttt', 'ktmt', 'uit']
 
 class_ids = [
-      1, 2, 3, 4, 5, 6]
+      0, 1, 2, 3, 4, 5, 6]
 save_dir = '/content/cp/'
 def to_float(x):
   return float("{:.2f}".format(x))
