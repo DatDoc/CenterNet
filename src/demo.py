@@ -17,7 +17,7 @@ time_stats = ['tot', 'load', 'pre', 'net', 'dec', 'post', 'merge']
 class_name = ['logo', 'cnpm', 'cs', 'hsv', 'khkttt', 'ktmt', 'uit']
 
 class_ids = [
-      0, 1, 2, 3, 4, 5, 6]
+      1, 2, 3, 4, 5, 6, 7]
 save_dir = '/content/cp/'
 def to_float(x):
   return float("{:.2f}".format(x))

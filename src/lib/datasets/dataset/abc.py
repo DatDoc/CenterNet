@@ -42,7 +42,7 @@ class COCO(data.Dataset):
     ############# CHANGE TO CUSTOM CLASSES AND MATCH CLASSES IDS ####################
     self.class_name = ['logo', 'cnpm', 'cs', 'hsv', 'khkttt', 'ktmt', 'uit']
     self._valid_ids = [
-      0, 1, 2, 3, 4, 5, 6]
+      1, 2, 3, 4, 5, 6, 7]
     #################################################################################  
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
     self.voc_color = [(v // 32 * 64 + 64, (v // 8) % 4 * 64, v % 8 * 32) \
