@@ -110,5 +110,13 @@ ENV/
 # mypy
 .mypy_cache/
 
-test.py
+test*.py
 xml2coco/
+txt2coco.py
+logo/
+infers/
+Hinh_Sai/
+GUI.py
+Hinh_Sai.zip
+infer.py
+cp/
