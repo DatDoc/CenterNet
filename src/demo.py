@@ -72,7 +72,7 @@ def demo(opt):
         if key in dictionary.keys():
           for i in range(len(dets[key])):
             if dets[key][i , 4] > 0.3:
-                f.write('{} {} {} {} {} {}\n'.format(dictionary[key],int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3]), float(dets[key][i, 4]]))
+                f.write('{} {} {} {} {} {}\n'.format(dictionary[key],int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3]), float(dets[key][i, 4])))
       f.close()
       
 if __name__ == '__main__':
