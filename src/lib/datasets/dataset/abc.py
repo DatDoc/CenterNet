@@ -11,7 +11,7 @@ import os
 import torch.utils.data as data
 
 class COCO(data.Dataset):
-  num_classes = 7 #CHANGE THIS TO NUMBER OF CLASSES 
+  num_classes = 14 #CHANGE THIS TO NUMBER OF CLASSES 
   default_resolution = [512, 512]
   mean = np.array([0.40789654, 0.44719302, 0.47026115],
                    dtype=np.float32).reshape(1, 1, 3)
@@ -27,22 +27,21 @@ class COCO(data.Dataset):
     if split == 'test':
       self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
-          'labels.json').format(split)
+          'val.json').format(split)
     else:
     ############# CHANGE PATH TO ANNOTATIONS TRAIN #################################
       if opt.task == 'exdet':
         self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
-          'labels.json').format(split)
+          '{}.json').format(split)
       else:
         self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
-          'labels.json').format(split)
+          '{}.json').format(split)
     self.max_objs = 128
     ############# CHANGE TO CUSTOM CLASSES AND MATCH CLASSES IDS ####################
-    self.class_name = ['logo', 'cnpm', 'cs', 'hsv', 'khkttt', 'ktmt', 'uit']
-    self._valid_ids = [
-      1, 2, 3, 4, 5, 6, 7]
+    self.class_name = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
+    self._valid_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
     #################################################################################  
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
     self.voc_color = [(v // 32 * 64 + 64, (v // 8) % 4 * 64, v % 8 * 32) \
