@@ -40,7 +40,22 @@ class COCO(data.Dataset):
           '{}.json').format(split)
     self.max_objs = 128
     ############# CHANGE TO CUSTOM CLASSES AND MATCH CLASSES IDS ####################
-    self.class_name = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"]
+    self.class_name = [
+      "Aortic enlargement",
+      "Atelectasis",
+      "Calcification",
+      "Cardiomegaly",
+      "Consolidation",
+      "ILD",
+      "Infiltration",
+      "Lung Opacity", 
+      "Nodule/Mass",
+      "Other lesion",
+      "Pleural effusion",
+      "Pleural thickening",
+      "Pneumothorax",
+      "Pulmonary fibrosis"
+    ]
     self._valid_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
     #################################################################################  
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
