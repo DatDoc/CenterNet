@@ -86,7 +86,11 @@ def demo(opt):
         if key in dictionary.keys():
           for i in range(len(dets[key])):
             if dets[key][i , 4] > 0.3:
-                f.write('{} {} {} {} {} {}\n'.format(dictionary[key],int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3]), float(dets[key][i, 4])))
+                ############# CHANGE THE EXPORT WAY ############################################
+                xmin, ymin, xmax, ymax = int(dets[key][i , 0]),int(dets[key][i , 1]),int(dets[key][i , 2]),int(dets[key][i , 3])
+                x, y = (xmin + (xmax - xmin) / 2) / 512, (ymin + (ymax - ymin) / 2) / 512
+                w, h = (xmax - xmin) / 512, (ymax - ymin) / 512
+                f.write('{} {} {} {} {} {}\n'.format(float(int(key) - 1), x, y, w, h, float(dets[key][i, 4])))
       f.close()
       
 if __name__ == '__main__':
