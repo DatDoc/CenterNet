@@ -80,21 +80,21 @@ def main(opt):
       with torch.no_grad():
         opt.test = True
         log_dict_val, preds = trainer.val(epoch, val_loader)
-        log_dict_val["map"] = val_loader.dataset.run_eval(preds, opt.save_dir).stats[1]
-        if log_dict_val["map"] is None:
-          print("no")
-        else:
-          print(log_dict_val["map"])
-          # aaaaaa
+        # print(log_dict_val)
+        # aaa
+        log_dict_val["map"] = val_loader.dataset.run_eval(preds, opt.save_dir).stats[0]
+        # print(log_dict_val["map"])
+
         opt.test = False
 
       for k, v in log_dict_val.items():
         logger.scalar_summary('val_{}'.format(k), v, epoch)
         logger.write('{} {:8f} | '.format(k, v))
       
-
-      if log_dict_val[opt.metric] < best:
+    
+      if log_dict_val[opt.metric] > best:
         best = log_dict_val[opt.metric]
+        # print(best)
         save_model(os.path.join(opt.save_dir, 'model_best.pth'), 
                    epoch, model)
     else:
