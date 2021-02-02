@@ -114,9 +114,19 @@ class COCO(data.Dataset):
     return self.num_samples
 
   def save_results(self, results, save_dir):
-    json.dump(self.convert_eval_format(results), 
-                open('{}/results.json'.format(save_dir), 'w'))
-  
+    # json.dump(self.convert_eval_format(results), 
+    #             open('{}/results.json'.format(save_dir), 'w'))
+    preds = self.convert_eval_format(results)
+        # import pdb; pdb.set_trace()
+        import numpy as np
+
+        def np_encoder(object):
+            if isinstance(object, np.generic):
+                return object.item()
+
+        with open("{}/results.json".format(save_dir), "w") as fp:
+            json.dump(preds, fp, default=np_encoder)
+            
   def run_eval(self, results, save_dir):
     # result_json = os.path.join(save_dir, "results.json")
     # detections  = self.convert_eval_format(results)
@@ -124,6 +134,11 @@ class COCO(data.Dataset):
     self.save_results(results, save_dir)
     coco_dets = self.coco.loadRes('{}/results.json'.format(save_dir))
     coco_eval = COCOeval(self.coco, coco_dets, "bbox")
+    coco_eval.params.useCats = True
+    coco_eval.params.iouType = "bbox"
+    coco_eval.params.iouThrs = np.array([0.4])
     coco_eval.evaluate()
     coco_eval.accumulate()
     coco_eval.summarize()
+    return coco_eval
+  
