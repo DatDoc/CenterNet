@@ -118,14 +118,13 @@ class COCO(data.Dataset):
     #             open('{}/results.json'.format(save_dir), 'w'))
     preds = self.convert_eval_format(results)
         # import pdb; pdb.set_trace()
-        import numpy as np
+    
+    def np_encoder(object):
+        if isinstance(object, np.generic):
+            return object.item()
 
-        def np_encoder(object):
-            if isinstance(object, np.generic):
-                return object.item()
-
-        with open("{}/results.json".format(save_dir), "w") as fp:
-            json.dump(preds, fp, default=np_encoder)
+    with open("{}/results.json".format(save_dir), "w") as fp:
+        json.dump(preds, fp, default=np_encoder)
             
   def run_eval(self, results, save_dir):
     # result_json = os.path.join(save_dir, "results.json")
