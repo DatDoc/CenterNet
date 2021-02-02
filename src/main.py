@@ -80,11 +80,8 @@ def main(opt):
       with torch.no_grad():
         opt.test = True
         log_dict_val, preds = trainer.val(epoch, val_loader)
-        # print(log_dict_val)
-        # aaa
+        
         log_dict_val["map"] = val_loader.dataset.run_eval(preds, opt.save_dir).stats[0]
-        # print(log_dict_val["map"])
-
         opt.test = False
 
       for k, v in log_dict_val.items():
